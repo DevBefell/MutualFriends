@@ -102,8 +102,4 @@ public class Utils {
         jsonData.forEach(e -> friends.add(e.getAsJsonObject().get("uuid").getAsString()));
         return friends;
     }
-
-    public void run(Runnable runnable) {
-        poolExecutor.execute(runnable);
-    }
 }

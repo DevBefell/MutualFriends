@@ -30,23 +30,22 @@ public class MutualFriendsCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length == 0 || args.length > 2) {
-            this.mod.utils.send("\u00A7cSpecify a user or two users. \u00A76(/mfr [user | (user user)]");
+            this.mod.utils.send("\u00A7cSpecify a user or two users. \u00A76(/mfr [user | (user user)]", true);
             return;
         }
-
         ArrayList<String> message = new ArrayList<>();
-        this.mod.utils.run(() -> {
+        this.mod.utils.poolExecutor.execute(() -> {
             boolean typeLength = args.length == 1;
             String player1 = typeLength ? this.mod.utils.minecraft.thePlayer.getName() : args[0];
-            String player2 = typeLength ? args[0] : args[1];
             ArrayList<String> targetFriends = this.mod.utils.fetchFriends(player1);
             if (targetFriends == null) {
-                this.mod.utils.send("\u00A7c" + (typeLength ? this.mod.utils.minecraft.thePlayer.getName() : args[0]) + " is an invalid player", true);
+                this.mod.utils.send("\u00A7c" + player1 + " is an invalid player", true);
                 return;
             }
+            String player2 = typeLength ? args[0] : args[1];
             ArrayList<String> secondTargetFriends = this.mod.utils.fetchFriends(player2);
             if (secondTargetFriends == null) {
-                this.mod.utils.send("\u00A7c" + args[1] + " is an invalid player", true);
+                this.mod.utils.send("\u00A7c" + player2 + " is an invalid player", true);
                 return;
             }
 
@@ -56,8 +55,6 @@ public class MutualFriendsCommand extends CommandBase {
                             tasks.add(this.mod.utils.poolExecutor.submit(() -> message.add(this.mod.utils.fetchUsername(friend))));
                         }
                     }
-
-
             );
             for (Future i : tasks) {
                 try {
