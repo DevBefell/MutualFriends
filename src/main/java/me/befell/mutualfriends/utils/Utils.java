@@ -80,16 +80,25 @@ public class Utils {
         return content.toString();
     }
 
-    public String fetchUsername(String uuid) {
-        String content = fetchString(String.format(this.ashconURL, uuid));
+    public JsonObject fetchAshcon(String user){
+        String content = fetchString(String.format(this.ashconURL, user));
         if (content == null) {
-            return null;
+            JsonObject error = new JsonObject();
+            error.addProperty("code","404");
+            error.addProperty("error","Error fetching");
+            return error;
         }
         JsonObject jsonData = new Gson().fromJson(content, JsonObject.class);
-        if (jsonData.has("code")) {
+
+        return jsonData;
+    }
+    public String fetchUsername(String user) {
+
+        JsonObject data = fetchAshcon(user);
+        if (data.has("code")) {
             return null;
         }
-        return jsonData.get("username").getAsString();
+        return data.get("username").getAsString();
     }
 
     public ArrayList<String> fetchFriends(String user) {

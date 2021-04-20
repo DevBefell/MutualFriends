@@ -1,12 +1,13 @@
 [
-{
-  "modid": "mutualfriends",
-  "name": "Mutual Friends",
-  "description": "Shows mutual friends of people",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "authorList": ["Befell"],
-  "credits": "pinkulu and his \"ideas\"..."
-
-}
+  {
+    "modid": "mutualfriends",
+    "name": "Mutual Friends",
+    "description": "Shows mutual friends of people",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "authorList": [
+      "Befell"
+    ],
+    "credits": "Electroid for their amazing api, pinkulu and his 'ideas'..."
+  }
 ]
